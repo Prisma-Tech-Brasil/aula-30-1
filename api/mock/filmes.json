@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "titulo": "Interestelar",
+    "diretor": "Christopher Nolan",
+    "anoLancamento": 2014,
+    "genero": ["Ficção Científica", "Aventura"],
+    "avaliacao": 8.6,
+    "duracao": 169,
+    "sinopse": "Uma equipe de exploradores viaja através de um buraco de minhoca no espaço na tentativa de garantir a sobrevivência da humanidade.",
+    "elenco": [
+      "Matthew McConaughey",
+      "Anne Hathaway",
+      "Jessica Chastain"
+    ],
+    "caminhoImagem": ""
+  },
+  {
+    "id": 2,
+    "titulo": "Piratas do Caribe: A Maldição do Pérola Negra",
+    "diretor": "Gore Verbinski",
+    "anoLancamento": 2003,
+    "genero": ["Aventura", "Fantasia"],
+    "avaliacao": 8.0,
+    "duracao": 143,
+    "sinopse": "Um ferreiro se une ao excêntrico pirata Jack Sparrow para salvar a mulher que ama das mãos de piratas amaldiçoados.",
+    "elenco": [
+      "Johnny Depp",
+      "Orlando Bloom",
+      "Keira Knightley"
+    ],
+    "caminhoImagem": ""
+  }
+]
