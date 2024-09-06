@@ -23,12 +23,19 @@ servidor.get("/arquivo/callback", (_req, res) => {
 });
 
 // Rota para ler arquivo usando Promise
-servidor.get('/arquivo/promise', async (_req, res) => {
+servidor.get("/arquivo/promise", async (_req, res) => {
   try {
-    const dados = await fsPromises.readFile(caminhoArquivo, 'utf8');
+    const dados = await fsPromises.readFile(caminhoArquivo, "utf8");
+    // Remover caracteres indesejados e filtrar linhas vazias
+    dados = dados
+      .split("\r")
+      .join("")
+      .split("\n")
+      .filter((linha) => linha.trim() !== "");
+
     res.json({ conteudo: dados });
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao ler o arquivo usando Promise' });
+    res.status(500).json({ erro: "Erro ao ler o arquivo usando Promise" });
   }
 });
 
