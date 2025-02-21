@@ -1,51 +1,159 @@
-# Bem-vindo à Turma de Programação!
+# 📌 Guia de Roteamento de API, Módulo `path` e Módulo `fs` no Node.js
 
-Olá, futuros mestres do código!
-
-Este repositório é o seu ponto de partida para dominar as artes obscuras do HTML, CSS, Javascript e afins. Aqui, você encontrará todos os arquivos necessários para acompanhar as aulas e praticar o que aprendemos.
-
-## Passo a Passo para Fazer o Fork
-
-Vamos colocar as mãos na massa! Siga os passos abaixo para fazer o fork deste repositório e ter uma cópia só sua:
-
-1. **Faça login no GitHub**: Caso ainda não tenha uma conta, crie uma [aqui](https://github.com/).
-2. **Acesse o repositório original**: Vá para o repositório do curso clicando [aqui](https://github.com/Prisma-Tech-Brasil/aula-11).
-3. **Fork it!**: No canto superior direito da página do repositório, clique no botão "Fork". Isso criará uma cópia do repositório no seu perfil do GitHub.
-4. **Clone o seu repositório**: Agora, no seu perfil, você verá o repositório que acabou de forkar. Clique nele e copie o link HTTPS ou SSH. No seu terminal, digite:
-
-   ```bash
-   git clone https://github.com/seu-usuario/repo-exemplo.git
-   ```
-
-   ou, se estiver usando SSH:
-
-   ```bash
-   git clone git@github.com:seu-usuario/repo-exemplo.git
-   ```
-
-5. **Explore e codifique**: Pronto! Agora você tem todos os arquivos no seu computador e pode começar a explorar e editar à vontade.
-
-## Materiais de Aula
-
-Dentro deste repositório, você encontrará um arquivo PDF com o conteúdo da aula. Este arquivo é fundamental para acompanhar as explicações e revisitar os conceitos ensinados. O arquivo está localizado na pasta `materiais`.
-
-## Praticando e Revisando
-
-Lembre-se, a prática leva à perfeição! Não se esqueça de:
-
-- **Exercitar**: Explore os exercícios propostos e tente criar suas próprias soluções. Quanto mais você praticar, melhor será sua compreensão.
-- **Revisar**: Leia e releia o material fornecido. A revisão é uma excelente maneira de fixar o conteúdo e descobrir novos detalhes que podem ter passado despercebidos na primeira leitura.
-
-## Dúvidas?
-
-Caso tenha qualquer dúvida, não hesite em perguntar! Use os canais de comunicação da turma, como o discord, para interagir com seus colegas e instrutor.
-
-Bom código e boas práticas!
+## 📌 Introdução
+Este documento aborda conceitos importantes sobre:
+- **Roteamento em APIs** (como definir rotas e lidar com requisições no Node.js)
+- **Módulo `path`** (para manipular caminhos de arquivos e diretórios)
+- **Módulo `fs`** (para ler, escrever e modificar arquivos no sistema)
 
 ---
 
-"Programar é uma arte. Cada linha de código é uma pincelada na tela da sua mente." - Iron Man, talvez.
+## 🚀 1. Roteamento de API
 
-Vamos juntos nessa jornada!
+### 📌 O que é Roteamento?
+Roteamento é o processo de definir quais funções devem ser executadas quando um cliente faz uma requisição para um endpoint específico da API.
 
-**Seu Instrutor Favorito**
+### 📌 Exemplo prático com Express.js
+O Express.js é um dos frameworks mais populares para criação de APIs no Node.js.
+
+#### 🔹 Instalando o Express
+```bash
+npm install express
+```
+
+#### 🔹 Criando um servidor com rotas
+```javascript
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Rota GET
+app.get('/', (req, res) => {
+    res.send('Bem-vindo à API!');
+});
+
+// Rota GET com parâmetro
+app.get('/usuario/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ mensagem: `Usuário ${userId} encontrado!` });
+});
+
+// Rota POST
+app.use(express.json());
+app.post('/usuario', (req, res) => {
+    const novoUsuario = req.body;
+    res.json({ mensagem: 'Usuário criado com sucesso!', usuario: novoUsuario });
+});
+
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
+```
+
+### 📌 Tipos de Rotas Comuns
+| Método | Descrição |
+|---------|------------|
+| GET     | Obtém dados do servidor |
+| POST    | Envia dados para o servidor |
+| PUT     | Atualiza dados existentes |
+| DELETE  | Remove um recurso |
+
+---
+
+## 🚀 2. Módulo `path`
+O módulo `path` é usado para manipular caminhos de arquivos e diretórios de forma segura e multiplataforma.
+
+### 📌 Principais Métodos
+
+#### 🔹 `path.join()` → Junta segmentos de caminho
+```javascript
+const path = require('path');
+const caminho = path.join('pasta', 'subpasta', 'arquivo.txt');
+console.log(caminho);
+// "pasta/subpasta/arquivo.txt" (Linux/macOS)
+// "pasta\subpasta\arquivo.txt" (Windows)
+```
+
+#### 🔹 `path.resolve()` → Resolve um caminho absoluto
+```javascript
+const caminhoAbsoluto = path.resolve('pasta', 'subpasta', 'arquivo.txt');
+console.log(caminhoAbsoluto);
+```
+
+#### 🔹 `path.basename()` → Retorna o nome do arquivo
+```javascript
+console.log(path.basename('/caminho/para/arquivo.txt')); // "arquivo.txt"
+```
+
+#### 🔹 `path.dirname()` → Retorna o diretório do arquivo
+```javascript
+console.log(path.dirname('/caminho/para/arquivo.txt')); // "/caminho/para"
+```
+
+#### 🔹 `path.extname()` → Retorna a extensão do arquivo
+```javascript
+console.log(path.extname('/caminho/para/arquivo.txt')); // ".txt"
+```
+
+---
+
+## 🚀 3. Módulo `fs`
+O módulo `fs` (File System) permite manipular arquivos no Node.js.
+
+### 📌 Ler Arquivo
+```javascript
+const fs = require('fs');
+fs.readFile('arquivo.txt', 'utf8', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+});
+```
+
+### 📌 Escrever em um Arquivo
+```javascript
+fs.writeFile('novoArquivo.txt', 'Conteúdo do arquivo', (err) => {
+    if (err) throw err;
+    console.log('Arquivo salvo!');
+});
+```
+
+### 📌 Adicionar Conteúdo a um Arquivo
+```javascript
+fs.appendFile('novoArquivo.txt', '\nNova linha adicionada!', (err) => {
+    if (err) throw err;
+    console.log('Conteúdo adicionado!');
+});
+```
+
+### 📌 Excluir Arquivo
+```javascript
+fs.unlink('novoArquivo.txt', (err) => {
+    if (err) throw err;
+    console.log('Arquivo deletado!');
+});
+```
+
+### 📌 Criar Diretório
+```javascript
+fs.mkdir('novaPasta', (err) => {
+    if (err) throw err;
+    console.log('Pasta criada!');
+});
+```
+
+### 📌 Remover Diretório
+```javascript
+fs.rmdir('novaPasta', (err) => {
+    if (err) throw err;
+    console.log('Pasta removida!');
+});
+```
+
+---
+
+## 🎯 Conclusão
+- O **Roteamento de API** define como uma API recebe e responde a requisições.
+- O **Módulo `path`** ajuda a manipular caminhos de arquivos de forma segura e multiplataforma.
+- O **Módulo `fs`** permite ler, escrever e excluir arquivos e pastas.
+
+Esses conceitos são fundamentais para o desenvolvimento de aplicações robustas no Node.js. 🚀
